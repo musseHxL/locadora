@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rumo | Aluguel de carros em Salvador</title>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--k:#111;--o:#ff5f00;--g:#f3f3f1;--w:#fff;--m:#666;--l:#dcdcd8;--ok:#1b7a43;--bad:#c0392b}
+*{box-sizing:border-box}
+body{margin:0;background:var(--g);color:var(--k);font:400 16px/1.5 Archivo,system-ui,sans-serif}
+h1,h2,h3{margin:0;line-height:1.05;font-weight:800;letter-spacing:-.02em}
+button,select,input{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--o);outline-offset:2px}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+.top{background:var(--k);color:#fff;position:relative;z-index:3}
+.bar{display:flex;align-items:center;gap:20px;flex-wrap:wrap;padding-top:14px;padding-bottom:14px}
+.logo{font-size:30px;font-weight:800;letter-spacing:-.04em;color:#fff;text-decoration:none;margin-right:auto}
+.logo i{color:var(--o);font-style:normal}
+nav{display:flex;gap:4px;flex-wrap:wrap}
+nav button{background:none;border:0;color:#fff;padding:8px 12px;cursor:pointer;font-weight:600;border-bottom:3px solid transparent}
+nav button[aria-current="true"]{border-color:var(--o)}
+.ub{background:none;border:2px solid #fff;color:#fff;padding:8px 16px;border-radius:2px;cursor:pointer;font-weight:600}
+.hero{background:var(--k);color:#fff;position:relative;overflow:hidden;padding:48px 0 110px}
+.hero::before{content:"";position:absolute;top:0;right:-6%;width:58%;height:100%;background:var(--o);clip-path:polygon(28% 0,100% 0,100% 100%,0 100%)}
+.hero .wrap{position:relative;z-index:2}
+.hero h1{font-size:clamp(42px,7vw,84px);max-width:11ch}
+.hero p{max-width:40ch;color:#ccc;margin:14px 0 0}
+.big{position:absolute;right:2%;bottom:40px;width:min(520px,48%);z-index:1}
+.big svg{width:100%;height:auto;display:block}
+.book{position:relative;z-index:4;margin-top:-64px;background:var(--w);padding:20px;border-radius:4px;box-shadow:0 14px 36px rgba(0,0,0,.22);display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;align-items:end}
+.book label{display:grid;gap:4px;font-size:13px;color:var(--m);font-weight:600}
+input,select{background:var(--g);border:1px solid var(--l);border-radius:2px;padding:11px 10px;width:100%}
+.btn{background:var(--o);color:var(--k);border:0;border-radius:2px;padding:12px 18px;font-weight:800;cursor:pointer}
+.btn.sec{background:none;border:2px solid var(--k)}
+.tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;padding:28px 0 4px}
+.pills{display:flex;gap:8px;flex-wrap:wrap;margin-right:auto}
+.pill{background:var(--w);border:1px solid var(--l);border-radius:99px;padding:7px 16px;cursor:pointer;font-weight:600}
+.pill[aria-pressed="true"]{background:var(--k);color:#fff;border-color:var(--k)}
+.tools input{width:200px}.tools select{width:150px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;padding:16px 0 40px}
+.card{background:var(--w);border:1px solid var(--l);border-radius:4px;display:flex;flex-direction:column}
+.card .img{background:var(--g);padding:16px 20px 0;border-bottom:4px solid var(--o)}
+.card svg{width:100%;height:auto;display:block}
+.cb{padding:16px;display:grid;gap:6px;flex:1}
+.cb h3{font-size:22px}
+.m{color:var(--m);font-size:14px}
+.price{font-size:30px;font-weight:800;letter-spacing:-.03em}
+.price small{font-size:14px;font-weight:400;color:var(--m);letter-spacing:0}
+.tag{font-size:13px;font-weight:600;width:max-content}
+.ok{color:var(--ok)}.no{color:var(--bad)}.wa{color:#9a6700}
+.h{padding:32px 0 8px}.h h2{font-size:40px}
+.empty{padding:40px 0;color:var(--m)}
+.fil{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;padding:16px 0}
+.fil .card{padding:18px;gap:8px;border-left:5px solid var(--o)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:13px;background:var(--g);padding:2px 8px;border-radius:2px}
+.panel{background:var(--w);border:1px solid var(--l);border-radius:4px;padding:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px;align-items:end;margin-bottom:20px}
+.list{display:grid;gap:12px;padding:16px 0 40px}
+.row{background:var(--w);border:1px solid var(--l);border-radius:4px;padding:14px 16px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.row>div:first-child{flex:1;min-width:200px}
+#modal{position:fixed;inset:0;background:rgba(0,0,0,.65);display:none;align-items:center;justify-content:center;padding:16px;z-index:9}
+#modal.on{display:flex}
+.dlg{background:var(--w);border-radius:4px;width:min(520px,100%);max-height:92vh;overflow:auto;padding:22px;display:grid;gap:12px}
+.dlg h2{font-size:32px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.sum{background:var(--g);padding:12px;display:grid;gap:4px;font-size:15px}
+.sum div{display:flex;justify-content:space-between}
+.sum .t{font-size:24px;font-weight:800;border-top:1px solid var(--l);padding-top:6px;margin-top:4px}
+.err{color:var(--bad);font-size:14px;min-height:20px}
+.toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%);background:var(--k);color:#fff;border-left:5px solid var(--o);padding:12px 18px;border-radius:2px;display:none;z-index:10}
+footer{color:var(--m);font-size:13px;padding:0 0 30px}
+@media(max-width:700px){.big{display:none}.hero::before{width:80%}.two{grid-template-columns:1fr}.tools input,.tools select{width:100%}}
+</style>
+</head>
+<body>
+<header class="top"><div class="wrap bar">
+  <a class="logo" href="#">rumo<i>.</i></a>
+  <nav id="nav"><button data-t="catalogo">Carros</button><button data-t="filiais">Lojas em Salvador</button><button data-t="reservas">Minhas reservas</button></nav>
+  <button id="user" class="ub">Entrar</button>
+</div></header>
+
+<section id="catalogo">
+  <div class="hero"><div class="wrap">
+    <h1>Alugue um carro em Salvador.</h1>
+    <p>Retire perto de você, devolva em qualquer loja da cidade e veja o valor total antes de reservar.</p>
+  </div><div class="big" id="big"></div></div>
+  <div class="wrap">
+    <div class="book">
+      <label>Retirada em<select id="fil"></select></label>
+      <label>Devolução em<select id="dev"></select></label>
+      <label>Data de retirada<input type="date" id="ini"></label>
+      <label>Data de devolução<input type="date" id="fim"></label>
+      <button class="btn" id="go">Buscar carros</button>
+    </div>
+    <div class="tools">
+      <div class="pills" id="pills"></div>
+      <input id="q" placeholder="Buscar modelo">
+      <select id="ord"><option value="p">Menor preço</option><option value="n">Nome</option></select>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<section id="filiais" hidden><div class="wrap">
+  <div class="h"><h2>Nossas lojas em Salvador</h2><p class="m">Cada loja tem sua frota. Uma transferência atualiza a disponibilidade em todas.</p></div>
+  <div class="fil" id="filGrid"></div>
+  <div class="panel">
+    <label>Veículo<select id="tv"></select></label>
+    <label>Destino<select id="td"></select></label>
+    <button class="btn" id="tb">Transferir veículo</button>
+  </div>
+  <p class="m" id="sync"></p>
+</div></section>
+
+<section id="reservas" hidden><div class="wrap">
+  <div class="h"><h2>Minhas reservas</h2></div>
+  <div class="list" id="resList"></div>
+</div></section>
+
+<div class="wrap"><footer>Protótipo acadêmico com dados fictícios.</footer></div>
+<div id="modal" role="dialog" aria-modal="true"><div class="dlg" id="dlg"></div></div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const BRL=n=>n.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const $=q=>document.querySelector(q);
+const day=n=>{const d=new Date();d.setDate(d.getDate()+n);return d.toISOString().slice(0,10)};
+const F={mat:{n:'Matriz Caminho das Árvores',a:'Caminho das Árvores, Salvador'},aer:{n:'Aeroporto de Salvador',a:'Terminal de passageiros, Salvador'},sho:{n:'Shopping da Bahia',a:'Região do Itaigara, Salvador'},bar:{n:'Loja Barra',a:'Orla da Barra, Salvador'},itp:{n:'Loja Itapuã',a:'Orla de Itapuã, Salvador'}};
+const V=[
+ {id:1,n:'Fiat Mobi',c:'Econômico',p:119,l:4,g:'Manual',f:'mat',k:'#e4572e',s:'ok'},
+ {id:2,n:'Hyundai HB20',c:'Econômico',p:139,l:5,g:'Manual',f:'aer',k:'#3a6ea5',s:'ok'},
+ {id:3,n:'Chevrolet Onix Plus',c:'Sedã',p:159,l:5,g:'Automático',f:'mat',k:'#6b7b83',s:'ok'},
+ {id:4,n:'Toyota Corolla',c:'Sedã',p:259,l:5,g:'Automático',f:'sho',k:'#1b1f23',s:'ok'},
+ {id:5,n:'Jeep Renegade',c:'SUV',p:289,l:5,g:'Automático',f:'bar',k:'#2f6f4e',s:'ok'},
+ {id:6,n:'Volkswagen T-Cross',c:'SUV',p:279,l:5,g:'Automático',f:'aer',k:'#b9bec4',s:'ok'},
+ {id:7,n:'Fiat Strada',c:'Picape',p:249,l:2,g:'Manual',f:'itp',k:'#b03a48',s:'ok'},
+ {id:8,n:'Toyota Hilux',c:'Picape',p:449,l:5,g:'Automático',f:'bar',k:'#44505a',s:'ok'},
+ {id:9,n:'Renault Kwid',c:'Econômico',p:109,l:4,g:'Manual',f:'itp',k:'#d9a21b',s:'man'}];
+let S={user:null,frota:V,res:[{id:1,vid:4,ini:day(5),fim:day(9),ret:'sho',dev:'sho',tot:0,st:'Confirmada',em:'outro@cliente.com'}],d:{ini:day(1),fim:day(4),dev:''},cat:''};
+try{const s=JSON.parse(localStorage.getItem('rumo2')||'null');if(s&&s.frota&&s.res){S.user=s.user;S.frota=s.frota;S.res=s.res}}catch(e){}
+const save=()=>{try{localStorage.setItem('rumo2',JSON.stringify({user:S.user,frota:S.frota,res:S.res}))}catch(e){}};
+const toast=m=>{const t=$('#toast');t.textContent=m;t.style.display='block';clearTimeout(toast.h);toast.h=setTimeout(()=>t.style.display='none',2800)};
+const car=k=>`<svg viewBox="0 0 200 80" aria-hidden="true"><path d="M10 56V44Q10 38 17 36L48 30 68 12Q72 9 78 9H128Q134 9 138 13L158 30 182 35Q190 37 190 44V56Z" fill="${k}"/><path d="M73 16H126L144 30H56Z" fill="rgba(255,255,255,.6)"/><circle cx="54" cy="58" r="13" fill="#111"/><circle cx="54" cy="58" r="5" fill="#ccc"/><circle cx="148" cy="58" r="13" fill="#111"/><circle cx="148" cy="58" r="5" fill="#ccc"/></svg>`;
+const busy=(vid,a,b)=>S.res.some(r=>r.vid===vid&&r.st==='Confirmada'&&a<=r.fim&&b>=r.ini);
+const status=v=>v.s==='man'?['Em manutenção','wa']:busy(v.id,S.d.ini,S.d.fim)?['Reservado nessas datas','no']:['Disponível','ok'];
+const calc=(v,a,b,dev)=>{const dias=Math.max(1,Math.round((new Date(b)-new Date(a))/864e5));const base=dias*v.p;const desc=dias>=7?base*.1:0;const taxa=dev!==v.f?80:0;return{dias,base,desc,taxa,tot:base-desc+taxa}};
+const opts=(first)=>(first?`<option value="">${first}</option>`:'')+Object.entries(F).map(([i,f])=>`<option value="${i}">${f.n}</option>`).join('');
+
+function grid(){
+  const q=$('#q').value.toLowerCase(),fil=$('#fil').value,o=$('#ord').value;
+  let L=S.frota.filter(v=>(!q||v.n.toLowerCase().includes(q))&&(!S.cat||v.c===S.cat)&&(!fil||v.f===fil));
+  L.sort((a,b)=>o==='p'?a.p-b.p:a.n.localeCompare(b.n));
+  $('#grid').innerHTML=L.length?L.map(v=>{const[t,c]=status(v);return`<article class="card"><div class="img">${car(v.k)}</div><div class="cb"><span class="tag ${c}">${t}</span><h3>${esc(v.n)}</h3><div class="m">${v.c} · ${v.l} lugares · ${v.g}</div><div class="m">Retire em: ${F[v.f].n}</div><div class="price">${BRL(v.p)} <small>/dia</small></div><button class="btn" data-v="${v.id}">Reservar</button></div></article>`}).join(''):'<p class="empty">Nenhum carro encontrado. Tente outra loja ou categoria.</p>';
+}
+function pills(){$('#pills').innerHTML=['','Econômico','Sedã','SUV','Picape'].map(c=>`<button class="pill" data-c="${c}" aria-pressed="${S.cat===c}">${c||'Todos'}</button>`).join('')}
+function filiais(){
+  $('#filGrid').innerHTML=Object.entries(F).map(([id,f])=>{const L=S.frota.filter(v=>v.f===id);const n=L.filter(v=>v.s==='ok').length;return`<article class="card"><h3>${f.n}</h3><div class="m">${f.a}</div><div><b>${L.length}</b> veículos · <b>${n}</b> disponíveis</div><div class="chips">${L.map(v=>`<span class="chip">${esc(v.n)}</span>`).join('')||'<span class="m">Sem veículos</span>'}</div></article>`}).join('');
+  $('#tv').innerHTML=S.frota.map(v=>`<option value="${v.id}">${esc(v.n)} (${F[v.f].n})</option>`).join('');
+  $('#td').innerHTML=opts();
+}
+function reservas(){
+  const b=$('#resList');
+  if(!S.user){b.innerHTML='<p class="empty">Entre na sua conta para ver suas reservas.</p>';return}
+  const L=S.res.filter(r=>r.em===S.user.em);
+  b.innerHTML=L.length?L.map(r=>{const v=S.frota.find(x=>x.id===r.vid);const ok=r.st==='Confirmada';return`<div class="row"><div><b>${esc(v.n)}</b><div class="m">${r.ini.split('-').reverse().join('/')} a ${r.fim.split('-').reverse().join('/')} · retirada: ${F[r.ret].n} · devolução: ${F[r.dev].n}</div></div><span class="tag ${ok?'ok':'no'}">${r.st}</span><b>${BRL(r.tot)}</b>${ok?`<button class="btn sec" data-c="${r.id}">Cancelar reserva</button>`:''}</div>`}).join(''):'<p class="empty">Você ainda não tem reservas. Escolha um carro na página inicial.</p>';
+}
+function tab(t){['catalogo','filiais','reservas'].forEach(x=>$('#'+x).hidden=x!==t);document.querySelectorAll('#nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.t===t));if(t==='filiais')filiais();if(t==='reservas')reservas();scrollTo(0,0)}
+const close=()=>$('#modal').classList.remove('on');
+const open=h=>{$('#dlg').innerHTML=h;$('#modal').classList.add('on')};
+const head=()=>{$('#user').textContent=S.user?S.user.n.split(' ')[0]+' · Sair':'Entrar'};
+
+function login(after){
+  open(`<h2>Entrar na Rumo</h2><p class="m">Informe seu nome e e-mail para criar a conta ou entrar.</p><label>Nome<input id="ln" autocomplete="name"></label><label>E-mail<input id="le" type="email" autocomplete="email"></label><div class="err" id="er"></div><div class="two"><button class="btn sec" id="x">Cancelar</button><button class="btn" id="ok">Entrar</button></div>`);
+  $('#x').onclick=close;
+  $('#ok').onclick=()=>{const n=$('#ln').value.trim(),e=$('#le').value.trim().toLowerCase();if(n.length<2||!/^\S+@\S+\.\S+$/.test(e)){$('#er').textContent='Preencha o nome e um e-mail válido.';return}S.user={n,em:e};save();head();close();toast('Bem-vindo, '+n.split(' ')[0]+'!');if(after)after()};
+}
+
+function detail(id){
+  const v=S.frota.find(x=>x.id===id);
+  open(`<div class="card"><div class="img">${car(v.k)}</div></div><h2>${esc(v.n)}</h2><div class="m">${v.c} · ${v.l} lugares · ${v.g} · Flex · Retire em ${F[v.f].n}</div>
+  <div class="two"><label>Retirada<input type="date" id="di" value="${S.d.ini}" min="${day(0)}"></label><label>Devolução<input type="date" id="df" value="${S.d.fim}" min="${day(0)}"></label></div>
+  <label>Devolver em<select id="dd">${opts()}</select></label>
+  <div class="sum" id="sm"></div><div class="err" id="er"></div>
+  <div class="two"><button class="btn sec" id="x">Fechar</button><button class="btn" id="rs">Confirmar reserva</button></div>`);
+  $('#dd').value=S.d.dev||v.f;
+  const up=()=>{const a=$('#di').value,b=$('#df').value,d=$('#dd').value;if(!a||!b||b<a){$('#sm').innerHTML='<div>Escolha datas válidas.</div>';return null}const c=calc(v,a,b,d);$('#sm').innerHTML=`<div><span>${c.dias} diária(s) × ${BRL(v.p)}</span><span>${BRL(c.base)}</span></div>${c.desc?`<div><span>Desconto de 10% (7 diárias ou mais)</span><span>−${BRL(c.desc)}</span></div>`:''}${c.taxa?`<div><span>Taxa para devolver em outra loja</span><span>${BRL(c.taxa)}</span></div>`:''}<div class="t"><span>Total</span><span>${BRL(c.tot)}</span></div>`;return{a,b,d,c}};
+  ['di','df','dd'].forEach(i=>$('#'+i).onchange=up);up();
+  $('#x').onclick=close;
+  $('#rs').onclick=()=>{
+    const r=up(),e=$('#er');e.textContent='';
+    if(!r){e.textContent='A devolução deve ser depois da retirada.';return}
+    if(v.s==='man'){e.textContent='Este veículo está em manutenção.';return}
+    if(busy(v.id,r.a,r.b)){e.textContent='Este carro já está reservado nessas datas. Mude as datas ou escolha outro.';return}
+    if(!S.user){login(()=>detail(id));return}
+    S.res.push({id:Date.now(),vid:v.id,ini:r.a,fim:r.b,ret:v.f,dev:r.d,tot:r.c.tot,st:'Confirmada',em:S.user.em});save();close();grid();toast('Reserva confirmada: '+v.n);tab('reservas');
+  };
+}
+
+$('#big').innerHTML=car('#fff');
+$('#fil').innerHTML=opts('Qualquer loja');
+$('#dev').innerHTML=opts('Na mesma loja da retirada');
+$('#ini').value=S.d.ini;$('#fim').value=S.d.fim;
+const sync=()=>{S.d={ini:$('#ini').value||S.d.ini,fim:$('#fim').value||S.d.fim,dev:$('#dev').value};grid()};
+['fil','dev','ini','fim'].forEach(i=>$('#'+i).onchange=sync);
+['q','ord'].forEach(i=>$('#'+i).oninput=grid);
+$('#go').onclick=()=>{sync();$('#pills').scrollIntoView({behavior:'smooth'})};
+$('#pills').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;S.cat=b.dataset.c;pills();grid()};
+$('#grid').onclick=e=>{const b=e.target.closest('[data-v]');if(b)detail(+b.dataset.v)};
+$('#nav').onclick=e=>{const b=e.target.closest('[data-t]');if(b)tab(b.dataset.t)};
+$('#resList').onclick=e=>{const b=e.target.closest('[data-c]');if(!b)return;S.res.find(x=>x.id==b.dataset.c).st='Cancelada';save();reservas();grid();toast('Reserva cancelada')};
+$('#user').onclick=()=>{if(S.user){S.user=null;save();head();reservas();toast('Você saiu da conta')}else login()};
+$('#tb').onclick=()=>{const v=S.frota.find(x=>x.id==$('#tv').value),d=$('#td').value;if(v.f===d){$('#sync').textContent='O veículo já está nessa loja.';return}v.f=d;save();filiais();grid();$('#sync').textContent=v.n+' transferido para '+F[d].n+'. Frota sincronizada às '+new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'})+'.'};
+$('#modal').onclick=e=>{if(e.target.id==='modal')close()};
+document.onkeydown=e=>{if(e.key==='Escape')close()};
+head();pills();grid();tab('catalogo');
+</script>
+</body>
+</html>
